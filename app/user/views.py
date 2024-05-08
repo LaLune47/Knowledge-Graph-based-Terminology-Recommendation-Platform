@@ -336,6 +336,7 @@ def show_all_articles():
     )
 
 @view.route("/show_article_details/<nid>")
+@login_required
 def show_article_details(nid) :
     req_params = BaseResponseParams(request)
 
@@ -384,6 +385,7 @@ def show_article_details(nid) :
 
 # 推荐页面
 @view.route("/push_to_article")
+@login_required
 def push_to_article():
     req_params = BaseResponseParams(request)
 
