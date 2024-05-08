@@ -1,0 +1,23 @@
+{% if req_params.err_msgs %}
+<div class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert">
+        <i class="icon-remove"></i>
+    </button>
+    <strong>
+        <i class="icon-remove"></i>
+        {{ _("操作失败！") }}
+    </strong>
+    {{req_params.err_msgs}}
+    <br>
+</div>
+{% endif %}
+{% if req_params.heads %}
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">
+        <i class="icon-remove"></i>
+    </button>
+    <strong>{{ _("操作成功！") }}</strong>
+    {{req_params.heads}}
+    <br>
+</div>
+{% endif %}

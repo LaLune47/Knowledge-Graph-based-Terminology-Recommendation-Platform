@@ -1,0 +1,691 @@
+﻿{% extends 'index.html' %}
+
+{% block page_content %}
+{% include 'err_menus.html' %}
+<div class="row">
+    <div class="col-xs-10 col-sm-offset-1">
+        <div class="hr dotted"></div>
+
+        <div id="user-profile-1" class="user-profile row">
+            <div class="col-xs-12 col-sm-3 center">
+                <div class="center" style="opacity: 0;margin-top: -20%;">
+                    <span class="btn btn-app btn-sm btn-light no-hover">
+                        <span class="line-height-1 bigger-170 blue"> 1,411 </span>
+
+                        <br>
+                        <span class="line-height-1 smaller-90"> Views </span>
+                    </span>
+                </div>
+
+                <div>
+                    <span class="profile-picture">
+                        <img id="avatar" class="editable img-responsive" alt="Alex's Avatar"
+                             src="{{ current_user.get_pic }}"/>
+                    </span>
+
+                    <div class="space-4"></div>
+
+                    <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+                        <div class="inline position-relative">
+                            <a href="javascript:;" class="user-title-label dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-circle light-green middle"></i>
+                                &nbsp;
+                                <span class="white">{{ _("修改我的头像") }}</span>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="space-6"></div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6">
+                <div class="center" style="display: none;">
+                    <span class="btn btn-app btn-sm btn-light no-hover">
+                        <span class="line-height-1 bigger-170 blue"> 1,411 </span>
+
+                        <br/>
+                        <span class="line-height-1 smaller-90"> Views </span>
+                    </span>
+
+                    <span class="btn btn-app btn-sm btn-yellow no-hover">
+                        <span class="line-height-1 bigger-170"> 32 </span>
+
+                        <br/>
+                        <span class="line-height-1 smaller-90"> Followers </span>
+                    </span>
+
+                    <span class="btn btn-app btn-sm btn-pink no-hover">
+                        <span class="line-height-1 bigger-170"> 4 </span>
+
+                        <br/>
+                        <span class="line-height-1 smaller-90"> Projects </span>
+                    </span>
+
+                    <span class="btn btn-app btn-sm btn-grey no-hover">
+                        <span class="line-height-1 bigger-170"> 23 </span>
+
+                        <br/>
+                        <span class="line-height-1 smaller-90"> Reviews </span>
+                    </span>
+
+                    <span class="btn btn-app btn-sm btn-success no-hover">
+                        <span class="line-height-1 bigger-170"> 7 </span>
+
+                        <br/>
+                        <span class="line-height-1 smaller-90"> Albums </span>
+                    </span>
+
+                    <span class="btn btn-app btn-sm btn-primary no-hover">
+                        <span class="line-height-1 bigger-170"> 55 </span>
+
+                        <br/>
+                        <span class="line-height-1 smaller-90"> Contacts </span>
+                    </span>
+                </div>
+
+                <div class="space-12"></div>
+                <form class="form">
+                    <div class="profile-user-info profile-user-info-striped">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> {{ _("用户邮箱") }}</div>
+
+                            <div class="profile-info-value">
+                                <!--<span class="editable" id="username">alexdoe</span>-->
+                                <input disabled name="user_number" value="{{ current_user.username }}" type="text"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> {{ _("用户姓名") }}</div>
+
+                            <div class="profile-info-value">
+                                <!--<span class="editable" id="username">alexdoe</span>-->
+                                <input name="user_name" value="{{ current_user.info.name }}" type="text"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> {{ _("手机号") }}</div>
+
+                            <div class="profile-info-value">
+                                <!--<span class="editable" id="username">alexdoe</span>-->
+                                <input name="user_phone" value="{{ current_user.info.phone }}" type="text"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> {{ _("性别") }}</div>
+
+                            <div class="profile-info-value">
+                                <select name="user_sex" class="form-control">
+                                    {% for k,v in sex_choices %}
+                                    <option value="{{ k }}" {% if current_user.info.sex== k %}selected{% endif %}> {{ v
+                                        }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> {{ _("年龄") }}</div>
+
+                            <div class="profile-info-value">
+                                <!--<span class="editable" id="username">alexdoe</span>-->
+                                <input name="user_age" value="{{ current_user.info.age }}" type="text"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> {{ _("住址") }}</div>
+
+                            <div class="profile-info-value">
+                                <!--<span class="editable" id="username">alexdoe</span>-->
+                                <input name="user_address" value="{{ current_user.info.address }}" type="text"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> {{ _("修改密码") }}</div>
+
+                            <div class="profile-info-value">
+                                <a href="javascript:;" class="btn bootbox btn-success btn-xs">{{ _("修改密码") }}</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                <div class="space-20"></div>
+
+            </div>
+        </div>
+    </div><!-- /.col -->
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<div id="change_password" hidden>
+    <form class="bootbox-form">
+        <input name="email" value="{{ _('接收邮件') }}: {{ current_user.username }}" class="bootbox-input form-control" autocomplete="off"
+                                      disabled placeholder="{{ _('接收邮件') }}">
+        <hr>
+        <input name="password" class="bootbox-input form-control" autocomplete="off"
+                                      type="password" placeholder="{{ _('密码') }}">
+        <hr>
+        <input name="password2" class="bootbox-input form-control" autocomplete="off" type="password"
+               placeholder="{{ _('确认密码') }}">
+        <hr>
+        <div style="display: flex;">
+            <input name="code" class="bootbox-input form-control" autocomplete="off" type="text"
+               placeholder="{{ _('填写验证码') }}">
+            <!--<a href="javascript:;" class="get_user_code btn btn-sm btn-success">{{ _("获取验证码") }}</a>-->
+            <input type='button' style="width: 25%;" class="get_user_code btn btn-sm btn-success" value='{{ _("获取验证码") }}'>
+        </div>
+    </form>
+</div>
+
+<script>
+    var csrftoken = $("meta[name=csrf-token]").attr("content");
+
+    function get_data(data) {
+        var password = $(".modal-dialog").find("input[name='password']").val();
+        var password2 = $(".modal-dialog").find("input[name='password2']").val();
+        data.data = password
+        return password == password2 ? true : false;
+    }
+    function get_code(data) {
+        var code = $(".modal-dialog").find("input[name='code']").val();
+        data.code = code;
+        return code.length == 4 ? true : false;
+    }
+
+    function change_password() {
+        $(".bootbox").on(ace.click_event, function () {
+            var $this = $(this);
+            var $tr = $(this).parents("tr");
+
+            var data = {};
+
+            data.symbol = "password";
+            data.chs = '{{ _("密码") }}';
+            html = $("#change_password").children().clone();
+
+            bootbox.dialog({
+                title: "{{ _('修改密码：') }}",
+                message: html,
+                buttons: {
+                    danger: {
+                        label: '{{ _("取消") }}',
+                        className: "btn-default",
+                    },
+                    success: {
+                        label: '{{ _("提交数据") }}',
+                        className: "btn-success",
+                        callback: function () {
+                            var ajax_symbol = true;
+                            if (get_data(data) == false) {
+                                ajax_symbol = false;
+                                $.gritter.add({
+                                    title: '{{ _("操作失败") }}',
+                                    text: "{{ _('密码不一致！') }}",
+                                    class_name: 'gritter-error'
+                                });
+                                return;
+                            }
+                            if (data.data == "") {
+                                ajax_symbol = false;
+                                $.gritter.add({
+                                    title: '{{ _("操作失败") }}',
+                                    text: "{{ _('密码不能为空！') }}",
+                                    class_name: 'gritter-error'
+                                });
+                                return;
+                            }
+                            if (get_code(data) == false) {
+                                $.gritter.add({
+                                    title: '{{ _("操作失败") }}',
+                                    text: "{{ _('验证码不能为空！') }}",
+                                    class_name: 'gritter-error'
+                                });
+                                return;
+                            }
+                            if (ajax_symbol) {
+                                $.ajax({
+                                    url: "{{blue_url_for('change_user_password')}}",
+                                    data: {
+                                        "user_email" : '{{ current_user.username }}',
+                                        "user_code" : data.code,
+                                        "user_password" : data.data,
+                                    },
+                                    method: "post",
+                                    headers: {"X-CSRFToken": csrftoken},
+                                    success: function (res) {
+                                        console.log("res: ", res)
+                                        if (res.code == 200) {
+                                            $.gritter.add({
+                                                title: "{{ _('操作成功') }}",
+                                                text: "{{ _('数据修改成功') }}",
+                                                class_name: 'gritter-success'
+                                            });
+                                        } else {
+                                            $.gritter.add({
+                                                title: "{{ _('操作失败') }}",
+                                                text: res.message,
+                                                class_name: 'gritter-error'
+                                            });
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    }
+
+    function get_user_codes() {
+
+        $("body").on("click",".get_user_code",function () {
+            var data = {};
+            console.log("get_data(data): ", get_data(data))
+            if (get_data(data) == false) {
+                $.gritter.add({
+                    title: '{{ _("操作失败") }}',
+                    text: "{{ _('密码不一致！') }}",
+                    class_name: 'gritter-error'
+                });
+                return;
+            }
+            if (data.data == "") {
+                $.gritter.add({
+                    title: '{{ _("操作失败") }}',
+                    text: "{{ _('密码不能为空！') }}",
+                    class_name: 'gritter-error'
+                });
+                return;
+            }
+
+            var $this = $(this);
+            var num = 0;
+            var second = 120;
+            $this.attr("value",second).attr("disabled","disabled"); //
+            var timer = setInterval(function() {
+                if (num > second){
+                    clearInterval(timer);
+                    $this.attr("value",'{{ _("获取验证码") }}').removeAttr("disabled");
+                } else {
+                    $this.attr("value",second - num);
+                }
+                num += 1;
+            }, 1000);
+
+            $.ajax({
+                url: "{{blue_url_for('send_user_code')}}",
+                data: {"user_email": '{{ current_user.username }}', },
+                method: "post",
+                headers: {"X-CSRFToken": csrftoken},
+                success: function (res) {
+                    console.log("res: ", res)
+                    if (res.code == 200) {
+                        $.gritter.add({
+                            title: "{{ _('操作成功') }}",
+                            text: "{{ _('邮件发送成功') }}",
+                            class_name: 'gritter-success'
+                        });
+                    } else {
+                        $.gritter.add({
+                            title: "{{ _('操作失败') }}",
+                            text: res.message,
+                            class_name: 'gritter-error'
+                        });
+                    }
+                }
+            })
+        });
+
+    }
+
+    jQuery(function ($) {
+
+        $.fn.editable.defaults.mode = 'inline';
+        $.fn.editableform.loading = "<div class='editableform-loading'><i class='light-blue icon-2x icon-spinner icon-spin'></i></div>";
+        $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="icon-ok icon-white"></i></button>' +
+            '<button type="button" class="btn editable-cancel"><i class="icon-remove"></i></button>';
+
+        try {//ie8 throws some harmless exception, so let's catch it
+
+            //it seems that editable plugin calls appendChild, and as Image doesn't have it, it causes errors on IE at unpredicted points
+            //so let's have a fake appendChild for it!
+            if (/msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) Image.prototype.appendChild = function (el) {
+            }
+
+            var last_gritter
+            $('#avatar').editable({
+                type: 'image',
+                name: 'avatar',
+                value: null,
+                image: {
+                    //specify ace file input plugin's options here
+                    btn_choose: 'Change Avatar',
+                    droppable: true,
+                    /**
+                     //this will override the default before_change that only accepts image files
+                     before_change: function(files, dropped) {
+								return true;
+							},
+                     */
+
+                    //and a few extra ones here
+                    name: 'avatar',//put the field name here as well, will be used inside the custom plugin
+                    max_size: 110000 * 100,//~100Kb
+                    on_error: function (code) {//on_error function will be called when the selected file has a problem
+                        if (last_gritter) $.gritter.remove(last_gritter);
+                        if (code == 1) {//file format error
+                            last_gritter = $.gritter.add({
+                                title: 'File is not an image!',
+                                text: 'Please choose a jpg|gif|png image!',
+                                class_name: 'gritter-error gritter-center'
+                            });
+                        } else if (code == 2) {//file size rror
+                            last_gritter = $.gritter.add({
+                                title: 'File too big!',
+                                text: 'Image size should not exceed 100Kb!',
+                                class_name: 'gritter-error gritter-center'
+                            });
+                        }
+                        else {//other error
+                        }
+                    },
+                    on_success: function () {
+                        $.gritter.removeAll();
+                    }
+                },
+                url: function (params) {
+                    console.log("params ======> ", params);
+                    // ***UPDATE AVATAR HERE*** //
+                    //You can replace the contents of this function with examples/profile-avatar-update.js for actual upload
+
+
+                    var deferred = new $.Deferred
+
+                    //if value is empty, means no valid files were selected
+                    //but it may still be submitted by the plugin, because "" (empty string) is different from previous non-empty value whatever it was
+                    //so we return just here to prevent problems
+                    var value = $('#avatar').next().find('input[type=hidden]:eq(0)').val();
+                    if (!value || value.length == 0) {
+                        deferred.resolve();
+                        return deferred.promise();
+                    }
+
+                    /*
+                    *
+                    * 		var thumb = $('#avatar').next().find('img').data('thumb');
+                            console.log("thumb: ", thumb)
+                            if(thumb) $('#avatar').get(0).src = thumb;
+                    *
+                    * */
+
+                    var csrftoken = $("meta[name=csrf-token]").attr("content");
+                    var files = $("input[name='avatar']").prop("files");
+                    var data = new FormData();
+                    /*var thumb = $('#avatar').next().find('img').data('thumb');
+
+                    var files = $('#avatar').next().find('img').prop("files");
+                    console.log("files: ",files.length,files)
+                    $("input[name='avatar']")*/
+                    if (files.length == 0) {
+                        Notiflix.Notify.Failure("Please select one file ....");
+                        return;
+                    }
+                    data.append('file', files[0]);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ blue_url_for('user_thumb_upload') }}",
+                        headers: {"X-CSRFToken": csrftoken},
+                        data: data,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function (ret) {
+                            console.log("ret: ", ret);
+                            $('#avatar').get(0).src = ret.pic;
+                            deferred.resolve({'status': 'OK'});
+                        }
+                    });
+
+                    return deferred.promise();
+                },
+
+                success: function (response, newValue) {
+                    console.log("====> ", response, newValue)
+                }
+            })
+        } catch (e) {
+        }
+
+
+        //another option is using modals
+        $('#avatar2').on('click', function () {
+            var modal =
+                '<div class="modal hide fade">\
+                    <div class="modal-header">\
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>\
+                        <h4 class="blue">Change Avatar</h4>\
+                    </div>\
+                    \
+                    <form class="no-margin">\
+                    <div class="modal-body">\
+                        <div class="space-4"></div>\
+                        <div style="width:75%;margin-left:12%;"><input type="file" name="file-input" /></div>\
+                    </div>\
+                    \
+                    <div class="modal-footer center">\
+                        <button type="submit" class="btn btn-small btn-success"><i class="icon-ok"></i> Submit</button>\
+                        <button type="button" class="btn btn-small" data-dismiss="modal"><i class="icon-remove"></i> Cancel</button>\
+                    </div>\
+                    </form>\
+                </div>';
+
+
+            var modal = $(modal);
+            modal.modal("show").on("hidden", function () {
+                modal.remove();
+            });
+
+            var working = false;
+
+            var form = modal.find('form:eq(0)');
+            var file = form.find('input[type=file]').eq(0);
+            file.ace_file_input({
+                style: 'well',
+                btn_choose: 'Click to choose new avatar',
+                btn_change: null,
+                no_icon: 'icon-picture',
+                thumbnail: 'small',
+                before_remove: function () {
+                    //don't remove/reset files while being uploaded
+                    return !working;
+                },
+                before_change: function (files, dropped) {
+                    var file = files[0];
+                    if (typeof file === "string") {
+                        //file is just a file name here (in browsers that don't support FileReader API)
+                        if (!(/\.(jpe?g|png|gif)$/i).test(file)) return false;
+                    }
+                    else {//file is a File object
+                        var type = $.trim(file.type);
+                        if ((type.length > 0 && !(/^image\/(jpe?g|png|gif)$/i).test(type))
+                            || (type.length == 0 && !(/\.(jpe?g|png|gif)$/i).test(file.name))//for android default browser!
+                        ) return false;
+
+                        if (file.size > 110000) {//~100Kb
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+            });
+
+            form.on('submit', function () {
+                if (!file.data('ace_input_files')) return false;
+
+                file.ace_file_input('disable');
+                form.find('button').attr('disabled', 'disabled');
+                form.find('.modal-body').append("<div class='center'><i class='icon-spinner icon-spin bigger-150 orange'></i></div>");
+
+                var deferred = new $.Deferred;
+                working = true;
+                deferred.done(function () {
+                    form.find('button').removeAttr('disabled');
+                    form.find('input[type=file]').ace_file_input('enable');
+                    form.find('.modal-body > :last-child').remove();
+
+                    modal.modal("hide");
+
+                    var thumb = file.next().find('img').data('thumb');
+                    if (thumb) $('#avatar2').get(0).src = thumb;
+
+                    working = false;
+                });
+
+
+                setTimeout(function () {
+                    deferred.resolve();
+                }, parseInt(Math.random() * 800 + 800));
+
+                return false;
+            });
+
+        });
+
+
+        //////////////////////////////
+        $('#profile-feed-1').slimScroll({
+            height: '250px',
+            alwaysVisible: true
+        });
+
+        $('.profile-social-links > a').tooltip();
+
+        $('.easy-pie-chart.percentage').each(function () {
+            var barColor = $(this).data('color') || '#555';
+            var trackColor = '#E2E2E2';
+            var size = parseInt($(this).data('size')) || 72;
+            $(this).easyPieChart({
+                barColor: barColor,
+                trackColor: trackColor,
+                scaleColor: false,
+                lineCap: 'butt',
+                lineWidth: parseInt(size / 10),
+                animate: false,
+                size: size
+            }).css('color', barColor);
+        });
+
+        ///////////////////////////////////////////
+
+        //show the user info on right or left depending on its position
+        $('#user-profile-2 .memberdiv').on('mouseenter', function () {
+            var $this = $(this);
+            var $parent = $this.closest('.tab-pane');
+
+            var off1 = $parent.offset();
+            var w1 = $parent.width();
+
+            var off2 = $this.offset();
+            var w2 = $this.width();
+
+            var place = 'left';
+            if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) place = 'right';
+
+            $this.find('.popover').removeClass('right left').addClass(place);
+        }).on('click', function () {
+            return false;
+        });
+
+
+        $('#user-profile-3')
+            .find('input[type=file]').ace_file_input({
+            style: 'well',
+            btn_choose: 'Change avatar',
+            btn_change: null,
+            no_icon: 'icon-picture',
+            thumbnail: 'large',
+            droppable: true,
+            before_change: function (files, dropped) {
+                var file = files[0];
+                if (typeof file === "string") {//files is just a file name here (in browsers that don't support FileReader API)
+                    if (!(/\.(jpe?g|png|gif)$/i).test(file)) return false;
+                }
+                else {//file is a File object
+                    var type = $.trim(file.type);
+                    if ((type.length > 0 && !(/^image\/(jpe?g|png|gif)$/i).test(type))
+                        || (type.length == 0 && !(/\.(jpe?g|png|gif)$/i).test(file.name))//for android default browser!
+                    ) return false;
+
+                    if (file.size > 110000) {//~100Kb
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        })
+            .end().find('button[type=reset]').on(ace.click_event, function () {
+            $('#user-profile-3 input[type=file]').ace_file_input('reset_input');
+        })
+            .end().find('.date-picker').datepicker().next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        })
+
+        $('[data-toggle="buttons"] .btn').on('click', function (e) {
+            var target = $(this).find('input[type=radio]');
+            var which = parseInt(target.val());
+            $('.user-profile').parent().addClass('hide');
+            $('#user-profile-' + which).parent().removeClass('hide');
+        });
+
+
+        ////////////////////
+
+        change_password();
+        get_user_codes();
+    })
+
+    $(".form").on("change", function () {
+        var values = $(this).serialize();
+        $.ajax({
+            url: "{{blue_url_for('user_details')}}",
+            data: values,
+            method: "post",
+            headers: {"X-CSRFToken": csrftoken},
+            success: function (res) {
+                console.log("res: ", res)
+                if (res.code == 200) {
+                    $.gritter.add({
+                        title: "{{ _('操作成功') }}",
+                        text: "{{ _('数据修改成功') }}",
+                        class_name: 'gritter-success'
+                    });
+                } else {
+                    $.gritter.add({
+                        title: "{{ _('操作失败') }}",
+                        text: res.message,
+                        class_name: 'gritter-error'
+                    });
+                }
+            }
+        })
+    })
+</script>
+{% endblock %}

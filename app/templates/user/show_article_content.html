@@ -1,0 +1,33 @@
+﻿{% extends 'index.html' %}
+
+{% block page_content %}
+<style>
+    .img {
+        text-align: center;
+    }
+    .img img {
+        width: 20%;
+        height: auto;
+    }
+    p {
+        text-indent: 2em;
+        line-height: 2em;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 ">
+            <h1 class="text-center">题目：{{ obj.name }}</h1>
+            <h2 class="text-center">类型：{{ obj.label }}</h2>
+            <div class="img">
+                <img src="{{ url_for("static", filename="article_img" ) }}/default.jpg" alt="{{ obj.title }}" class="img-fluid">
+            </div>
+            <p>
+                {{ obj.en }}
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

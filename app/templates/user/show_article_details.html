@@ -1,0 +1,108 @@
+﻿{% extends 'index.html' %}
+
+{% block page_content %}
+<style>
+    .article_list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .article_item a {
+        text-decoration: none;
+    }
+    .article_item {
+        width: 30%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin: 10px;
+    }
+    .article_img {
+        width: 100%;
+        max-height: 400px;
+        overflow: hidden;
+    }
+    .article_content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+    }
+
+    .span_list {
+        display: flex;
+        justify-content: space-around;
+    }
+    .span_item {
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin: 10px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        padding: 6px 30px;
+    }
+    .span_list a {
+        text-decoration: none;
+    }
+    .span_list .active {
+        background-color: #5bc0de;
+        color: #fff;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-11 span_list">
+            <a href="{{ blue_url_for("show_all_articles") }}" class="{% if req_params.search == "" %}active{% endif %}">
+                <span class="text-center span_item">
+                    全部
+                </span>
+            </a>
+            {% for kind_id, kind_value in kind_choices %}
+                <a href="{{ blue_url_for("show_all_articles", search=kind_id) }}" class="{% if req_params.search == kind_id %}active{% endif %}">
+                    <span class="text-center span_item">
+                        {{ kind_value }}
+                    </span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 article_list">
+            {% for obj in articles %}
+                <div class="article_item">
+                    <h1 style="display: flex; justify-content: space-between">
+                        <a href="{{ blue_url_for("show_article_details",nid=obj.name) }}">题目：{{ obj.name }}</a>
+                    </h1>
+                    <h2>
+                        类型: {{ obj.label }}
+                    </h2>
+                    <div class="article_img">
+                        <img src="{{ url_for("static", filename="article_img" ) }}/default.jpg" alt="{{ obj.name }}" class="img-responsive">
+                    </div>
+                    <p class="article_content">内容：{{ obj.en }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <tr class="text-right">
+        <td colspan="12">
+            <div class="test-right col-sm-6 col-sm-offset-6">
+            </div>
+            <div class="text-right">
+                {% block show_pages %}
+                    <div class="clearfix">
+                        <div class="right">
+                            <ul id="pager" class="pagination no-margin pull-right">
+                                {{ page_info.pager() }}
+                            </ul>
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+        </td>
+    </tr>
+</div>
+
+{% endblock %}

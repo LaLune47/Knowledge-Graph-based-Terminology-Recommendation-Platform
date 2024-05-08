@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>{% block Title %}{% endblock %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="csrf-token" content="{{ csrf_token() }}">
+
+		<!-- basic styles -->
+		<link href='{{ url_for("static", filename="assets/css/bootstrap.min.css" ) }}' rel="stylesheet"  />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/font-awesome.min.css" ) }}' />
+
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/jquery-ui-1.10.3.custom.min.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/jquery.gritter.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/bootstrap-editable.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/chosen.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/datepicker.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/bootstrap-timepicker.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/daterangepicker.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/colorpicker.css" ) }}' />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href='{{ url_for("static", filename="assets/css/font-awesome-ie7.min.css" ) }}' />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts -->
+
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/fonts.googleapis.com.css" ) }}' />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/ace.min.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/ace-rtl.min.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/ace-skins.min.css" ) }}' />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href='{{ url_for("static", filename="assets/css/ace-ie.min.css" ) }}' />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script src='{{ url_for("static", filename="assets/js/ace-extra.min.js" ) }}'></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src='{{ url_for("static", filename="assets/js/html5shiv.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/respond.min.js" ) }}'></script>
+		<![endif]-->
+
+		{% block header_statics %}{% endblock %}
+	</head>
+
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="javascript:;" class="navbar-brand">
+						<small>
+							{% block navbar_icon %}{% endblock %}
+							{% block navbar_title %}{% endblock %}
+						</small>
+					</a><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				{% block navbar_header %}
+				<div class="navbar-header pull-right" role="navigation">
+				</div>
+				{% endblock %}
+			</div><!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler " id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+
+                    {% block sidebar_shortcuts %}
+                    {% endblock %}
+
+					{% block nav_list %}
+
+					{% endblock %}
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">首页</a>
+							</li>
+							<li class="active">控制台</li>
+						</ul><!-- .breadcrumb -->
+
+						{% block breadcrumb1 %}
+						{% endblock %}
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+                        {% block nav_search1 %}
+                        {% endblock %}
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								控制台
+								<small>
+									<i class="icon-double-angle-right"></i>
+									 查看
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+                        {% block page_header1 %}
+                        {% endblock %}
+
+						<div class="row">
+                            {% block page_content %}
+                            {% endblock %}
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+
+		<script src='{{ url_for("static", filename="assets/jquery/2.0.3/jquery.min.js" ) }}'></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+        <script src='{{ url_for("static", filename="assets/jquery/1.10.2/jquery.min.js" ) }}'></script>
+        <![endif]-->
+
+		<!--[if !IE]> -->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='{{ url_for("static", filename="assets/js/jquery-2.0.3.min.js" ) }}'>"+"<"+"script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='{{ url_for("static", filename="assets/js/jquery-1.10.2.min.js" ) }}'>"+"<"+"script>");
+        </script>
+        <![endif]-->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='{{ url_for("static", filename="assets/js/jquery.mobile.custom.min.js" ) }}'>"+"<"+"script>");
+		</script>
+
+		<script src='{{ url_for("static", filename="assets/js/bootstrap.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/typeahead-bs2.min.js" ) }}'></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src='{{ url_for("static", filename="assets/js/excanvas.min.js" ) }}'></script>
+		<![endif]-->
+
+		<script src='{{ url_for("static", filename="assets/js/jquery-ui-1.10.3.custom.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.ui.touch-punch.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.slimscroll.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.easy-pie-chart.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.sparkline.min.js" ) }}'></script>
+		<!--<script src='{{ url_for("static", filename="assets/js/flot/jquery.flot.min.js" ) }}'></script>-->
+		<!--<script src='{{ url_for("static", filename="assets/js/flot/jquery.flot.pie.min.js" ) }}'></script>-->
+		<!--<script src='{{ url_for("static", filename="assets/js/flot/jquery.flot.resize.min.js" ) }}'></script>-->
+
+		<script src='{{ url_for("static", filename="assets/js/jquery-ui-1.10.3.custom.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.ui.touch-punch.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.gritter.min.js" ) }}'></script>
+
+		<script src='{{ url_for("static", filename="assets/js/bootbox.min.js" ) }}'></script>
+
+		<script src='{{ url_for("static", filename="assets/js/chosen.jquery.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/fuelux/fuelux.spinner.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/date-time/bootstrap-datepicker.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/date-time/bootstrap-timepicker.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/date-time/moment.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/date-time/daterangepicker.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/bootstrap-colorpicker.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.knob.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.autosize.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.inputlimiter.1.3.1.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.maskedinput.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/bootstrap-tag.min.js" ) }}'></script>
+
+		<!-- ace scripts -->
+
+		<script src='{{ url_for("static", filename="assets/js/fuelux/fuelux.spinner.min.js" ) }}'></script>
+
+		<script src='{{ url_for("static", filename="assets/js/x-editable/bootstrap-editable.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/x-editable/ace-editable.min.js" ) }}'></script>
+
+		<script src='{{ url_for("static", filename="assets/js/jquery.maskedinput.min.js" ) }}'></script>
+
+		<script src='{{ url_for("static", filename="assets/js/ace-elements.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/ace.min.js" ) }}'></script>
+
+
+
+		<!-- inline scripts related to this page -->
+
+
+        <div style="display:none">
+            <!--<script src='{{ url_for("static", filename="assets/js/start.js" ) }}' language='JavaScript' charset='gb2312'></script>-->
+        </div>
+
+		{% block extra_js %}
+
+		{% endblock %}
+    </body>
+</html>
+

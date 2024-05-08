@@ -1,0 +1,71 @@
+﻿{% extends 'index.html' %}
+
+{% block page_content %}
+{% include 'err_menus.html' %}
+
+<form class="form-horizontal" role="form" action="{{ request.path }}" method="POST" autocomplete="off">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> {{ _('姓名') }}： </label>
+
+        <div class="col-sm-5">
+            <input {{req_params.html_keys('name')}} type="text" class="col-xs-10 col-sm-5 form-control">
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> {{ _('手机号') }}： </label>
+
+        <div class="col-sm-5">
+            <input {{req_params.html_keys('phone')}} type="text" class="col-xs-10 col-sm-5 form-control">
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> {{ _('年龄') }}： </label>
+
+        <div class="col-sm-5">
+            <input {{req_params.html_keys('age',type="number",step="1",min="0",value=0)}} type="text" class="col-xs-10 col-sm-5 form-control">
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-select-1"> {{ _("性别") }} </label>
+        <div class="col-sm-5">
+            <select class="form-control" id="form-field-select-1" name="sex">
+                {% for sex_name,sex_cn in sex_choice %}
+                <option value="{{ sex_name }}" {% if sex_name == req_params.sex %}selected{% endif %}>{{ sex_cn }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> {{ _('地址') }}： </label>
+
+        <div class="col-sm-5">
+            <textarea rows="10" {{req_params.html_keys('address')}} type="text" class="col-xs-10 col-sm-5 form-control">{{req_params.address}}</textarea>
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-4 col-md-8">
+            <button class="btn btn-info" type="submit">
+                <i class="icon-ok bigger-110"></i>
+                {{ _("提交") }}
+            </button>
+
+            &nbsp; &nbsp; &nbsp;
+            <button class="btn" type="reset">
+                <i class="icon-undo bigger-110"></i>
+                {{ _("重置") }}
+            </button>
+        </div>
+    </div>
+</form>
+{% endblock %}

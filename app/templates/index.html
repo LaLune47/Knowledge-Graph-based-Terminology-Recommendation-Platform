@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block Title %}科技新技术术语推荐系统{% endblock %}
+{% block navbar_icon %}<i class="icon-leaf"></i>{% endblock %}
+{% block navbar_title %}{{ _("科技新技术术语推荐系统") }}{% endblock %}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+    <li>
+        <i class="icon-home home-icon"></i>
+        <a href="javascript:;"></a>
+    </li>
+</ul><!-- .breadcrumb -->
+{% endblock %}
+
+{% block navbar_header %}
+    <div class="navbar-header pull-right" role="navigation">
+        <ul class="nav ace-nav">
+            <li class="light-blue">
+                <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                    {% if current_user.is_authenticated %}
+                    <img class="nav-user-photo" src="{{ current_user.get_pic }}" alt="Jason's Photo" />
+                    <span class="user-info">
+                        <small>欢迎使用,</small>
+                        {{ current_user.username }}
+                    </span>
+                    {% else %}
+                    <span class="user-info">
+                        <small>未登录</small>
+                        点我登录
+                    </span>
+                    {% endif %}
+
+                    <i class="icon-caret-down"></i>
+                </a>
+
+                <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+<!--
+                    <li>
+                        <a href="#">
+                            <i class="icon-user"></i>
+                            个人资料
+                        </a>
+                    </li>
+-->
+
+                    <li class="divider"></li>
+
+                    <li>
+
+                        {% if current_user.is_authenticated %}
+                        <a href="{{blue_url_for('user_logout')}}">
+                            <i class="icon-off"></i>
+                            退出
+                        </a>
+                        {% else %}
+                        <a href="{{blue_url_for('user_login')}}">
+                            <i class="icon-off"></i>
+                            登录
+                        </a>
+                        {% endif %}
+
+                    </li>
+                </ul>
+            </li>
+        </ul><!-- /.ace-nav -->
+    </div><!-- /.navbar-header -->
+{% endblock %}
+
+{% block page_header %}
+    <div class="page-header" style="opacity: 0;display: none;">
+        <h1>
+            控制台
+            <small>
+                <i class="icon-double-angle-right"></i>
+                 查看
+            </small>
+        </h1>
+    </div><!-- /.page-header -->
+{% endblock %}
+
+{% block nav_list %}
+    <ul class="nav nav-list">
+        {% if current_user.is_role_superadmin %}
+            {{ get_url_html("show_all_users",_("用户管理")) }}
+        {% endif %}
+
+        {{ get_url_html("user_details",_("我的信息")) }}
+
+        {% if not current_user.is_role_common %}
+
+        {% endif %}
+
+        {% if current_user.is_authenticated %}
+        {{ get_url_html("show_all_articles",_("所有文章")) }}
+        {{ get_url_html("push_to_article",_("推荐文章")) }}
+
+        <li>
+            <a href="{{blue_url_for('user_logout')}}">
+                <i class="icon-dashboard"></i>
+                <span class="menu-text"> {{ _("退出") }} </span>
+            </a>
+        </li>
+        {% else %}
+
+        <li>
+            <a href="{{blue_url_for('user_login')}}">
+                <i class="icon-dashboard"></i>
+                <span class="menu-text"> {{ _("登录") }} </span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $.each($(".form-group"),function (index,form_group) {
+        var input_id = $(form_group).find("input").attr("id");
+        var label_for = $(form_group).find("label").attr("for");
+        if (label_for === undefined && input_id !== undefined) {
+            $(form_group).find("label").attr("for",input_id);
+        }
+    });
+</script>
+{% endblock %}

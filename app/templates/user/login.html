@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>科技新技术术语推荐系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="csrf-token" content="{{ csrf_token() }}">
+
+		<!-- basic styles -->
+		<link href='{{ url_for("static", filename="assets/css/bootstrap.min.css" ) }}' rel="stylesheet"  />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/font-awesome.min.css" ) }}' />
+
+		<!--[if IE 7]>
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/font-awesome-ie7.min.css" ) }}' />
+		<![endif]-->
+		<!-- page specific plugin styles -->
+
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/jquery-ui-1.10.3.custom.min.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/jquery.gritter.css" ) }}' />
+
+		<!-- fonts -->
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/fonts.googleapis.com.css" ) }}' />
+		<!-- ace styles -->
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/ace.min.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/ace-rtl.min.css" ) }}' />
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/ace-skins.min.css" ) }}' />
+
+		<!--[if lte IE 8]>
+		<link rel="stylesheet" href='{{ url_for("static", filename="assets/css/ace-ie.min.css" ) }}' />
+		<![endif]-->
+		<!-- inline styles related to this page -->
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+
+		<![endif]-->
+
+        <style>
+            body {
+                background: url('{{ url_for("static", filename="img.png" ) }}') no-repeat center center;
+                background-size: cover;
+            }
+        </style>
+	</head>
+
+	<body class="login-layout">
+		<div class="main-container">
+			<div class="main-content">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="login-container">
+							<div class="center">
+								<h1>
+									<i class="icon-leaf green"></i>
+									<span class="red">用户</span>
+									<span class="white">登录</span>
+								</h1>
+							</div>
+
+							<div class="space-6"></div>
+
+							<div class="position-relative">
+								<div id="login-box" class="login-box {% if status != 'register' %}visible{% endif %} widget-box no-border">
+									<div class="widget-body">
+										<div class="widget-main">
+											<h4 class="header blue lighter bigger">
+												<i class="icon-coffee green"></i>
+												请输入个人信息
+											</h4>
+
+											<div class="space-6"></div>
+
+											<form  autocomplete="off">
+												<fieldset>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" class="form-control" {{req_params.html_keys('username')}} />
+															<i class="icon-user"></i>
+														</span>
+													</label>
+
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" class="form-control" {{req_params.html_keys('password')}} />
+															<i class="icon-lock"></i>
+														</span>
+													</label>
+
+													<div class="space"></div>
+
+													<div class="clearfix text-center">
+														<button onclick="ToLogin(this);" type="button" class="width-35 btn btn-sm btn-primary">
+															<i class="icon-key"></i>
+															登录
+														</button>
+													</div>
+
+													<div class="space-4"></div>
+												</fieldset>
+											</form>
+
+											<script>
+												function ToLogin(obj) {
+												    var $this = $(obj);
+													var form_values = $this.parents("form").serialize();
+													var csrftoken = $("meta[name=csrf-token]").attr("content");
+													$.ajax({
+															type:"POST",
+															url:"{{blue_url_for('user_login')}}?next={{req_params.next}}",
+															data:form_values,
+															headers:{"X-CSRFToken":csrftoken},
+															success: function (msg) {
+																console.log(msg);
+
+																if(msg.code == 200) {
+																	$.gritter.add({
+																		title: '登录成功',
+																		text: msg.message,
+																		class_name: 'gritter-success'
+																	});
+																	setTimeout(function(){
+																		location.href = msg.data.next_page;
+																	},2000);
+																} else {
+																	$.gritter.add({
+																		title: '登录失败',
+																		text: msg.message,
+																		class_name: 'gritter-error'
+																	});
+																}
+															},
+														}
+													);
+												}
+											</script>
+										</div><!-- /widget-main -->
+
+										<div class="toolbar clearfix">
+											<div class="pull-right">
+												<a href="#" onclick="show_box('signup-box'); return false;" class="user-signup-link">
+													去注册
+													<i class="icon-arrow-right"></i>
+												</a>
+											</div>
+										</div>
+									</div><!-- /widget-body -->
+								</div><!-- /login-box -->
+
+								<div id="signup-box" class="signup-box {% if status == 'register' %}visible{% endif %} widget-box no-border">
+									<div class="widget-body">
+										<div class="widget-main">
+											<h4 class="header green lighter bigger">
+												<i class="icon-group blue"></i>
+												新用户注册
+											</h4>
+
+											<div class="space-6"></div>
+											<p> 输入注册信息: </p>
+
+											<form  autocomplete="off">
+												<fieldset>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" class="form-control" {{req_params.html_keys('username')}} />
+															<i class="icon-user"></i>
+														</span>
+													</label>
+
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" class="form-control" {{req_params.html_keys('password')}} />
+															<i class="icon-lock"></i>
+														</span>
+													</label>
+
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" class="form-control" {{req_params.html_keys('repassword')}} />
+															<i class="icon-retweet"></i>
+														</span>
+													</label>
+
+													<div class="space-24"></div>
+
+													<div class="clearfix">
+														<button type="reset" class="width-30 pull-left btn btn-sm">
+															<i class="icon-refresh"></i>
+															重置
+														</button>
+
+														<button type="button" id="kv" onclick="ToRegister(this)" class="width-65 pull-right btn btn-sm btn-success">
+															注册
+															<i class="icon-arrow-right icon-on-right"></i>
+														</button>
+													</div>
+												</fieldset>
+											</form>
+											<script>
+												function ToRegister(obj) {
+												    var csrftoken = $("meta[name=csrf-token]").attr("content");
+												    var $this = $(obj);
+													var form_values = $this.parents("form").serialize();
+													$.ajax({
+															type:"POST",
+															url:"{{blue_url_for('user_register')}}",
+															data:form_values,
+															headers:{"X-CSRFToken":csrftoken},
+															success: function (msg) {
+																console.log(msg.code);
+
+																if(msg.code == 200) {
+																	$.gritter.add({
+																		title: 'Register success',
+																		text: msg.message,
+																		class_name: 'gritter-success'
+																	});
+																	show_box('login-box');
+																} else {
+																	$.gritter.add({
+																		title: 'Register error',
+																		text: msg.message,
+																		class_name: 'gritter-error'
+																	});
+																}
+															},
+														}
+													);
+												}
+											</script>
+										</div>
+
+										<div class="toolbar center">
+											<a href="#" onclick="show_box('login-box'); return false;" class="back-to-login-link">
+												<i class="icon-arrow-left"></i>
+												返回去登录
+											</a>
+										</div>
+									</div><!-- /widget-body -->
+
+								</div><!-- /signup-box -->
+
+							</div><!-- /position-relative -->
+						</div>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+
+		<!--[if !IE]> -->
+
+		<script src='{{ url_for("static", filename="assets/jquery/2.0.3/jquery.min.js" ) }}'></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+        <script src='{{ url_for("static", filename="assets/jquery/1.10.2/jquery.min.js" ) }}'></script>
+        <![endif]-->
+
+
+		<!--[if !IE]> -->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='{{ url_for("static", filename="assets/js/jquery-1.10.2.min.js" ) }}'>"+"<"+"script>");
+        </script>
+        <![endif]-->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='{{ url_for("static", filename="assets/js/jquery.mobile.custom.min.js" ) }}'>"+"<"+"script>");
+		</script>
+
+		<script src='{{ url_for("static", filename="assets/js/bootstrap.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery-ui-1.10.3.custom.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.ui.touch-punch.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/ace-extra.min.js" ) }}'></script>
+
+		<script src='{{ url_for("static", filename="assets/js/bootbox.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.gritter.min.js" ) }}'></script>
+
+		<script src='{{ url_for("static", filename="assets/js/ace.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/html5shiv.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/respond.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/ace-elements.min.js" ) }}'></script>
+		<script src='{{ url_for("static", filename="assets/js/jquery.easy-pie-chart.min.js" ) }}'></script>
+
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript">
+			function show_box(id) {
+			 jQuery('.widget-box.visible').removeClass('visible');
+			 jQuery('#'+id).addClass('visible');
+			}
+		</script>
+
+
+
+	<script>
+		jQuery(function($) {
+
+
+		})
+
+	</script>
+</body>
+</html>

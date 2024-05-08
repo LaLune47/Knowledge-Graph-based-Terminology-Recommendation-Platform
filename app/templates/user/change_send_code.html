@@ -1,0 +1,69 @@
+﻿{% extends 'index.html' %}
+
+{% block page_content %}
+{% include 'err_menus.html' %}
+
+<form class="form-horizontal" role="form" action="{{ request.path }}" method="POST" autocomplete="off">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> {{ _('发送邮件账号') }}： </label>
+
+        <div class="col-sm-5">
+            <input {{req_params.html_keys('send_email')}} type="text" class="col-xs-10 col-sm-5 form-control">
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> {{ _('选择的服务') }}： </label>
+
+        <div class="col-sm-5">
+            <input {{req_params.html_keys('smtpserver')}} type="text" class="col-xs-10 col-sm-5 form-control">
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> {{ _('服务密码') }}： </label>
+
+        <div class="col-sm-5">
+            <input {{req_params.html_keys('password')}} type="text" class="col-xs-10 col-sm-5 form-control">
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> {{ _('过期时长') }}： </label>
+
+        <div class="col-sm-5">
+            <input {{req_params.html_keys('expire_time')}} type="number" min=1 class="col-xs-10 col-sm-5 form-control">
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> {{ _('发送的内容') }}： </label>
+
+        <div class="col-sm-5">
+            <textarea rows="10" {{req_params.html_keys('subject')}} type="text" class="col-xs-10 col-sm-5 form-control">{{req_params.subject}}</textarea>
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-4 col-md-8">
+            <button class="btn btn-info" type="submit">
+                <i class="icon-ok bigger-110"></i>
+                {{ _("提交") }}
+            </button>
+
+            &nbsp; &nbsp; &nbsp;
+            <button class="btn" type="reset">
+                <i class="icon-undo bigger-110"></i>
+                {{ _("重置") }}
+            </button>
+        </div>
+    </div>
+</form>
+{% endblock %}

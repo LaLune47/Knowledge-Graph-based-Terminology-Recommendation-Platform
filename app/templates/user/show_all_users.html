@@ -1,0 +1,212 @@
+﻿{% extends 'index.html' %}
+
+{% block page_content %}
+<div class="col-xs-12">
+    <div class="widget-main">
+        <form class="form-search">
+            <div class="row">
+                <div class="col-xs-9"></div>
+                <div class="col-xs-3">
+                    <div class="input-group">
+                        <input type="text" name="search" value="{{ req_params.search }}" class="form-control search-query" placeholder="{{ _('查询账号') }}">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-purple btn-sm" name="btn" value="search">
+                                {{ _("搜索") }}
+                                <i class="icon-search icon-on-right bigger-110"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-info">
+        <div class="panel-body">
+            <form class="tr_filter">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-sm-1">{{ _("索引") }}</th>
+                            <th class="text-center">{{ _("姓名") }}</th>
+                            <th class="text-center">{{ _("角色") }}</th>
+                            <th class="text-center">{{ _("操作") }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vendor in admins %}
+                        <tr class="text-center" nid="{{ vendor.id }}" username="{{ vendor.username }}">
+                            <td class="">{{ page_info.prev_count + loop.index }}</td>
+                            <td class="username">{{ vendor.username }}</td>
+                            <td class="user_role">{{ vendor.get_role_display }}</td>
+                            <td class="col-sm-5">
+                                <a href="javascript:;" class="btn btn-sm bootbox bootbox-username">
+                                    <i class="icon-pencil align-top bigger-125"></i>
+                                    {{ _("修改账号") }}
+                                </a>
+                                <a href="javascript:;" class="btn btn-sm btn-danger  bootbox bootbox-password">
+                                    <i class="icon-pencil align-top bigger-125"></i>
+                                    {{ _("修改密码") }}
+                                </a>
+                                <a href="javascript:;" class="btn btn-sm btn-warning  bootbox bootbox-role">
+                                    <i class="icon-pencil align-top bigger-125"></i>
+                                    {{ _("修改角色") }}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                        <tr class="text-right">
+                            <td colspan="12">
+                                <div class="test-right col-sm-6 col-sm-offset-6">
+                                </div>
+                                <div class="text-right">
+                                    {% block show_pages %}
+                                        <div class="clearfix">
+                                            <div class="right">
+                                                <ul id="pager" class="pagination no-margin pull-right">
+                                                    {{ page_info.pager() }}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    {% endblock %}
+                                </div>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<div id="radio-role" hidden>
+    <div class="control-group form-inline">
+        {% for k, v in user_role_details %}
+        <div class="radio">
+            <label>
+                <input name="radio-role" value="{{ k }}" type="radio" class="ace">
+                <span class="lbl">{{ _(v) }}</span>
+            </label>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    function get_attr(obj) {
+        var tr = $(obj).parents("tr") ;
+        var nid = tr.attr("nid");
+        var username = tr.attr("username");
+        return {"nid":nid,"username":username}
+    }
+
+    var csrftoken = $("meta[name=csrf-token]").attr("content");
+
+    jQuery(function($) {
+
+        $(".bootbox").on(ace.click_event, function() {
+            attrs = get_attr(this);
+            console.log("attrs: ",attrs);
+            var $this = $(this);
+            var $tr = $(this).parents("tr");
+
+            var data = {
+                "nid" : attrs.nid,
+            };
+
+            var html = "";
+            var out_data = "";
+            if ($(this).hasClass("bootbox-username")) {
+                data.symbol = "username";
+                data.chs = '{{ _("用户名") }}';
+                html = '<form class="bootbox-form"><input name="username" class="bootbox-input form-control" autocomplete="off" type="text"></form>'
+                function get_data() {
+                    out_data = $(".modal-dialog").find("input[name='username']").val();
+                    data.data = out_data;
+                    return out_data ? true : false;
+                }
+            } else if ($(this).hasClass("bootbox-password")) {
+                data.symbol = "password";
+                data.chs = '{{ _("密码") }}';
+                html = '<form class="bootbox-form"><input name="password" class="bootbox-input form-control" autocomplete="off" type="password" placeholder="{{ _('密码') }}"><hr><input name="password2" class="bootbox-input form-control" autocomplete="off" type="password" placeholder="{{ _('确认密码') }}"></form>'
+                function get_data() {
+                    var password = $(".modal-dialog").find("input[name='password']").val();
+                    var password2 = $(".modal-dialog").find("input[name='password2']").val();
+                    data.data = password
+                    return password == password2 ? true : false;
+                }
+            } else if ($(this).hasClass("bootbox-role")) {
+                data.symbol = "role"
+                data.chs = '{{ _("角色") }}';
+                html = '<form class="bootbox-form">'+ $("#radio-role").html() +'</form>'
+                function get_data() {
+                     var role = $(".modal-dialog").find("input[name='radio-role']:checked").val();
+                     data.data = role;
+                     return role !== undefined;
+                }
+            }
+
+            bootbox.dialog({
+                title: "{{ _('修改当前用户：') }}"+ attrs.username+" "+data.chs,
+                message: html,
+                buttons: {
+                    danger: {
+                        label: '{{ _("取消") }}',
+                        className: "btn-default",
+                    },
+                    success: {
+                        label: '{{ _("提交数据") }}',
+                        className: "btn-success",
+                        callback: function() {
+                            if (get_data() == false) {
+                                $.gritter.add({
+                                    title: '{{ _("操作失败") }}',
+                                    text: "{{ _('数据输入异常！') }}",
+                                    class_name: 'gritter-error'
+                                });
+                            };
+
+                            $.ajax({
+                                url: "{{blue_url_for('change_user')}}",
+                                data: data,
+                                method: "post",
+                                headers:{"X-CSRFToken":csrftoken},
+                                success: function (res) {
+                                    console.log("res: ", res)
+                                    if (res.code == 200) {
+                                        if (data.symbol == "username") {
+                                            $tr.find(".username").text(data.data);
+                                        } else if (data.symbol == "role") {
+                                            console.log("res: ", res)
+                                            $tr.find(".user_role").text(res.data.role);
+                                        }
+
+                                        $.gritter.add({
+                                            title: "{{ _('操作成功') }}",
+                                            text: "{{ _('数据修改成功') }}",
+                                            class_name: 'gritter-success'
+                                        });
+                                    } else {
+                                        $.gritter.add({
+                                            title: "{{ _('操作失败') }}",
+                                            text: res.message,
+                                            class_name: 'gritter-error'
+                                        });
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
+            });
+        });
+    })
+</script>
+{% endblock %}

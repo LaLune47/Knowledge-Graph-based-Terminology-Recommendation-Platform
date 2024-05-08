@@ -1,0 +1,78 @@
+﻿{% extends 'index.html' %}
+
+{% block page_content %}
+<style>
+    .article_list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .article_item a {
+        text-decoration: none;
+    }
+    .article_item {
+        width: 30%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin: 10px;
+    }
+    .article_img {
+        width: 100%;
+        max-height: 400px;
+        overflow: hidden;
+    }
+    .article_content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+    }
+
+    .span_list {
+        display: flex;
+        justify-content: space-around;
+    }
+    .span_item {
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin: 10px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        padding: 6px 30px;
+    }
+    .span_list a {
+        text-decoration: none;
+    }
+    .span_list .active {
+        background-color: #5bc0de;
+        color: #fff;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 article_list">
+            {% for obj in articles %}
+                <div class="article_item">
+                    <h1 style="display: flex; justify-content: space-between">
+                        <a href="{{ blue_url_for("show_article_details",nid=obj.id) }}">题目：{{ obj.title }}</a>
+                    </h1>
+                    <h2>
+                        类型: {{ obj.get_kind_display }}
+                    </h2>
+                    <div class="article_img">
+                        {% if obj.img %}
+                        <img src="{{ url_for("static", filename="article_img" ) }}/{{ obj.img }}" alt="{{ obj.title }}" class="img-responsive">
+                        {% else %}
+                        <img src="{{ url_for("static", filename="article_img" ) }}/default.jpg" alt="{{ obj.title }}" class="img-responsive">
+                        {% endif %}
+                    </div>
+                    <p class="article_content">内容：{{ obj.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
