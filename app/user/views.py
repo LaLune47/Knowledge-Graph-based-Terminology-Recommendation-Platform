@@ -305,10 +305,10 @@ def show_all_articles():
     req_params = BaseResponseParams(request)
 
     search = req_params.search
-    if search :
-        sql = f"MATCH (n:{search}) RETURN n"
-    else :
-        sql = "MATCH (n) RETURN n"
+    if search:
+        sql = f"MATCH (n:{search}) WHERE NOT '用户' IN labels(n)  RETURN n"
+    else:
+        sql = "MATCH (n) WHERE NOT '用户' IN labels(n) RETURN n"
 
     articles = graph_handler.graph.run(sql).data()
 
