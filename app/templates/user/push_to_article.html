@@ -56,18 +56,12 @@
             {% for obj in articles %}
                 <div class="article_item">
                     <h1 style="display: flex; justify-content: space-between">
-                        <a href="{{ blue_url_for("show_article_details",nid=obj.id) }}">题目：{{ obj.title }}</a>
+                        <h2>题目：{{ obj.title }}</h2>
+<!--                        <a href="{{ blue_url_for("show_article_details",nid=obj.id) }}">题目：{{ obj.title }}</a>-->
                     </h1>
                     <h2>
                         类型: {{ obj.get_kind_display }}
                     </h2>
-<!--                    <div class="article_img">-->
-<!--                        {% if obj.img %}-->
-<!--                        <img src="{{ url_for("static", filename="article_img" ) }}/{{ obj.img }}" alt="{{ obj.title }}" class="img-responsive">-->
-<!--                        {% else %}-->
-<!--                        <img src="{{ url_for("static", filename="article_img" ) }}/default.jpg" alt="{{ obj.title }}" class="img-responsive">-->
-<!--                        {% endif %}-->
-<!--                    </div>-->
                     <p class="article_content">内容：{{ obj.content }}</p>
                 </div>
             {% endfor %}

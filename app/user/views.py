@@ -393,7 +393,6 @@ def push_to_article():
     sql = f"MATCH p=(n1:用户)-[r]-(n2) where n1.name={current_user.id} RETURN r, n2"
     res = graph_handler.graph.run(sql).data()
 
-    articles = [1,2,3]
     print("========================>>>>>>>>>>>>>>>>>>>>")
 
     # 点击数据
@@ -408,5 +407,13 @@ def push_to_article():
     merged_data = [(index, item, click_dict.get(item, 0)) for index, item in enumerate(terms_array)]
     print(merged_data)
     # todo 替换算法
+
+    articles = []
+    articles.append({
+        "title": 11111111111,
+        "content": 222222222222222,
+        "get_kind_display": 33333333333333
+    })
+
 
     return render_template("user/push_to_article.html",articles=articles,req_params=req_params)
