@@ -92,8 +92,8 @@
         {% endif %}
 
         {% if current_user.is_authenticated %}
-        {{ get_url_html("show_all_articles",_("所有文章")) }}
-        {{ get_url_html("push_to_article",_("推荐文章")) }}
+        {{ get_url_html("show_all_articles",_("所有术语")) }}
+        {{ get_url_html("push_to_article",_("推荐推荐")) }}
 
         <li>
             <a href="{{blue_url_for('user_logout')}}">

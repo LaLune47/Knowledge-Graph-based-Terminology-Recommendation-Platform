@@ -16,6 +16,7 @@ from app.tools.neo4j_handler import graph_handler
 from py2neo import Node, Relationship, RelationshipMatcher
 
 from .item_array import terms_array
+import random
 
 view = pm.get_blue_app(__name__)
 
@@ -403,10 +404,22 @@ def push_to_article():
     click_dict = dict(click_data)
 
     # 创建一个新的列表，包括术语、索引和点击次数
-    # 使用click_dict.get(item, 0)来为不存在的项提供默认点击次数0
-    merged_data = [(index, item, click_dict.get(item, 0)) for index, item in enumerate(terms_array)]
+    # 创建一个新的列表，仅包括点击次数大于0的术语、索引和点击次数
+    merged_data = [(index, item, click_dict.get(item, 0)) for index, item in enumerate(terms_array) if
+                   click_dict.get(item, 0) > 0]
     print(merged_data)
+
     # todo 替换算法
+
+
+    results = [index for index, _, _ in merged_data]
+    random_number = random.randint(0, 600)
+    results.append(random_number)
+    random_number = random.randint(0, 600)
+    results.append(random_number)
+    print(results)
+
+
 
     articles = []
     articles.append({
