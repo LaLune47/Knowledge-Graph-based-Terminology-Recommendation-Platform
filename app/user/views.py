@@ -1,7 +1,7 @@
-from flask import render_template,redirect,url_for,request,flash,jsonify,make_response,session
+from flask import render_template,redirect, request, jsonify, session
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
-from .. import app,pm,db,app_tools
+from .. import pm,db,app_tools
 import os,time
 _ = app_tools.BabelGetText
 from . import models
@@ -9,12 +9,13 @@ from .. import settings
 from ..tools.pager import PageInfo
 from ..tools.params_req import BaseResponseParams
 from ..tools.json_params import JsonBaseResponse
-from sqlalchemy import or_
 from ..tools.role_sign import sign_user_role
 from ..tools.logger import logger_method
 from app.tools.neo4j_handler import graph_handler
 
-from py2neo import Graph, Node, Relationship, RelationshipMatcher
+from py2neo import Node, Relationship, RelationshipMatcher
+
+from .item_array import terms_array
 
 view = pm.get_blue_app(__name__)
 
@@ -392,9 +393,20 @@ def push_to_article():
     sql = f"MATCH p=(n1:用户)-[r]-(n2) where n1.name={current_user.id} RETURN r, n2"
     res = graph_handler.graph.run(sql).data()
 
-    articles = []
+    articles = [1,2,3]
     print("========================>>>>>>>>>>>>>>>>>>>>")
-    for item in res:
-        print(item["r"]["count"], item["n2"]["name"], str(item["n2"].labels).strip(":"))  # todo 替换算法
+
+    # 点击数据
+    click_data = [(item["n2"]["name"], item["r"]["count"]) for item in res]
+    # print(click_data)
+
+    # 创建一个字典，将点击数据与术语名称关联
+    click_dict = dict(click_data)
+
+    # 创建一个新的列表，包括术语、索引和点击次数
+    # 使用click_dict.get(item, 0)来为不存在的项提供默认点击次数0
+    merged_data = [(index, item, click_dict.get(item, 0)) for index, item in enumerate(terms_array)]
+    print(merged_data)
+    # todo 替换算法
 
     return render_template("user/push_to_article.html",articles=articles,req_params=req_params)
