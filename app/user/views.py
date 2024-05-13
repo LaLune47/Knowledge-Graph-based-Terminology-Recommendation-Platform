@@ -16,6 +16,7 @@ from app.tools.neo4j_handler import graph_handler
 from py2neo import Node, Relationship, RelationshipMatcher
 
 from .item_array import terms_array
+from .item_array import terms_array_details
 import random
 
 view = pm.get_blue_app(__name__)
@@ -419,14 +420,14 @@ def push_to_article():
     results.append(random_number)
     print(results)
 
-
-
     articles = []
-    articles.append({
-        "title": 11111111111,
-        "content": 222222222222222,
-        "get_kind_display": 33333333333333
-    })
-
+    for index in results:
+        if index < len(terms_array_details):
+            item = terms_array_details[index]
+            articles.append({
+                "title": item[0],
+                "content": item[1],
+                "get_kind_display": item[2]
+            })
 
     return render_template("user/push_to_article.html",articles=articles,req_params=req_params)
