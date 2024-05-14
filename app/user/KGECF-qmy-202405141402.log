@@ -1,0 +1,17 @@
+KGECF
+------------------Parameter Setting--------------------
+          learning_rate : 0.0001
+             num_factor : 1000
+                num_neg : 8
+                 margin : 0.1
+                  alpha : 1.0
+             batch_size : 1000
+                 epochs : 5000
+               num_user : 200
+               num_item : 650
+                num_rel : 1
+                dataset : qmy
+            num_process : 10
+                   hits : [5, 10]
+                verbose : True
+-------------------------------------------------------

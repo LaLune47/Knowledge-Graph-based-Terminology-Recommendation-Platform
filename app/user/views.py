@@ -411,13 +411,13 @@ def push_to_article():
     print(merged_data)
 
     # todo 替换算法
-
-
-    results = [index for index, _, _ in merged_data]
-    random_number = random.randint(0, 600)
-    results.append(random_number)
-    random_number = random.randint(0, 600)
-    results.append(random_number)
+    from .rec_model import get_ans
+    results = get_ans(current_user.id, n_rec=10)
+    # results = [index for index, _, _ in merged_data]
+    # random_number = random.randint(0, 600)
+    # results.append(random_number)
+    # random_number = random.randint(0, 600)
+    # results.append(random_number)
     print(results)
 
     articles = []
