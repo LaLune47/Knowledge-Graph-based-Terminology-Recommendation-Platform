@@ -18,6 +18,7 @@ from py2neo import Node, Relationship, RelationshipMatcher
 from .item_array import terms_array
 from .item_array import terms_array_details
 import random
+from random import shuffle
 
 view = pm.get_blue_app(__name__)
 
@@ -412,12 +413,19 @@ def push_to_article():
 
     # todo 替换算法
     from .rec_model import get_ans
-    results = get_ans(current_user.id, n_rec=10)
+    # results = get_ans(current_user.id, n_rec=10)
     # results = [index for index, _, _ in merged_data]
     # random_number = random.randint(0, 600)
     # results.append(random_number)
     # random_number = random.randint(0, 600)
     # results.append(random_number)
+    # print(results)
+
+    results1 = get_ans(current_user.id, n_rec=10)
+    results2 = [index for index, _, _ in merged_data]
+    results = results1 + results2
+    # 打乱合并后的列表
+    shuffle(results)
     print(results)
 
     articles = []
