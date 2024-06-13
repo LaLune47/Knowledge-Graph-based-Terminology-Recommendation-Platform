@@ -26,6 +26,7 @@
         display: -webkit-box;
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
+        font-size: 20px;
     }
 
     .span_list {
@@ -56,13 +57,13 @@
             {% for obj in articles %}
                 <div class="article_item">
                     <h1 style="display: flex; justify-content: space-between">
-                        <h2>题目：{{ obj.title }}</h2>
+                        <h2>{{ obj.title }}</h2>
 <!--                        <a href="{{ blue_url_for("show_article_details",nid=obj.id) }}">题目：{{ obj.title }}</a>-->
                     </h1>
-                    <h2>
-                        类型: {{ obj.get_kind_display }}
-                    </h2>
-                    <p class="article_content">内容：{{ obj.content }}</p>
+                    <h3>
+                        级别: {{ obj.get_kind_display }}
+                    </h3>
+                    <p class="article_content">{{ obj.content }}</p>
                 </div>
             {% endfor %}
         </div>
